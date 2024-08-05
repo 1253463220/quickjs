@@ -21,7 +21,7 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
-
+CONFIG_IOS=y
 ifeq ($(shell uname -s),Darwin)
 CONFIG_DARWIN=y
 endif
@@ -77,6 +77,24 @@ CONFIG_CLANG=y
 CONFIG_DEFAULT_AR=y
 CONFIG_LTO=
 endif
+
+ifdef CONFIG_IOS
+# use clang for iOS
+CONFIG_CLANG=y
+CONFIG_DEFAULT_AR=y
+CROSS_PREFIX=xcrun -sdk iphoneos
+endif
+
+# ifdef CONFIG_IOS
+# # 设置 iOS 模拟器 SDK 和架构
+# CONFIG_CLANG=y
+# CONFIG_DEFAULT_AR=y
+# CROSS_PREFIX=xcrun -sdk iphonesimulator 
+# SDKROOT=$(shell xcrun --sdk iphonesimulator --show-sdk-path)
+# CFLAGS+=-isysroot $(SDKROOT)
+# LDFLAGS+=-isysroot $(SDKROOT)
+# endif
+
 
 ifdef CONFIG_WIN32
   ifdef CONFIG_M32
